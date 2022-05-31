@@ -11,6 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+// require the routes to use for the database
+app.use(require('./routes'));
+
 // connect to the mongoose database
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/social-thoughts', {
   useNewUrlParser: true,
