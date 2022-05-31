@@ -1,5 +1,6 @@
 //  import the dependencies
-const { Schema, model } = require('mongoose');
+const { Schema, model, trusted } = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
 
 const ThoughtSchema = new Schema({
     thoughtText: {
@@ -10,12 +11,19 @@ const ThoughtSchema = new Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        get: createdAtVal => dateFormat(createdAtVal)
     },
     username: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
+},
+{
+    toJSON: {
+        getters: true,
+    },
+    id: false
 });
 
 // create the Thought model using the ThoughtSchema
